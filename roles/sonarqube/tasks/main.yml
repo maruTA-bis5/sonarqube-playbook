@@ -1,0 +1,148 @@
+---
+- name: install java runtime
+  yum:
+    name: java-1.8.0-openjdk-headless
+    state: latest
+  become: yes
+  become_user: root
+
+- name: add yum repository
+  get_url:
+    url: http://downloads.sourceforge.net/project/sonar-pkg/rpm/sonar.repo
+    dest: /etc/yum.repos.d/sonar.repo
+  become: yes
+  become_user: root
+
+- name: install sonarqube
+  yum:
+    name: sonar
+    state: latest
+  become: yes
+  become_user: root
+
+- name: append jdbc properties
+  blockinfile:
+    dest: /opt/sonar/conf/sonar.properties
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: jdbc"
+    content: |
+      sonar.jdbc.username={{sonar.jdbc.username}}
+      sonar.jdbc.password={{sonar.jdbc.password}}
+      sonar.jdbc.url={{sonar.jdbc.url}}
+      sonar.jdbc.maxActive={{sonar.jdbc.maxActive}}
+      sonar.jdbc.maxIdle={{sonar.jdbc.maxIdle}}
+      sonar.jdbc.minIdle={{sonar.jdbc.minIdle}}
+      sonar.jdbc.maxWait={{sonar.jdbc.maxWait}}
+  become: yes
+  become_user: root
+
+- name: append web properties
+  blockinfile:
+    dest: /opt/sonar/conf/sonar.properties
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: web"
+    content: |
+      sonar.web.javaOpts={{sonar.web.javaOpts}}
+      sonar.web.javaAdditionalOpts={{sonar.web.javaAdditionalOpts}}
+      sonar.web.host={{sonar.web.host}}
+      sonar.web.port={{sonar.web.port}}
+      sonar.web.http.maxThreads={{sonar.web.http.maxThreads}}
+      sonar.web.http.minThreads={{sonar.web.http.minThreads}}
+      sonar.web.http.acceptCount={{sonar.web.http.acceptCount}}
+      sonar.web.https.port={{sonar.web.https.port}}
+      sonar.web.https.keyAlias={{sonar.web.https.keyAlias}}
+      sonar.web.https.keyPass={{sonar.web.https.keyPass}}
+      sonar.web.https.keystoreFile={{sonar.web.https.keystoreFile}}
+      sonar.web.https.keystorePass={{sonar.web.https.keystorePass}}
+      sonar.web.https.keystoreType={{sonar.web.https.keystoreType}}
+      sonar.web.https.keystoreProvider={{sonar.web.https.keystoreProvider}}
+      sonar.web.https.truststoreFile={{sonar.web.https.truststoreFile}}
+      sonar.web.https.truststorePass={{sonar.web.https.truststorePass}}
+      sonar.web.https.truststoreType={{sonar.web.https.truststoreType}}
+      sonar.web.https.truststoreProvider={{sonar.web.https.truststoreProvider}}
+      sonar.web.https.clientAuth={{sonar.web.https.clientAuth}}
+      sonar.web.https.ciphers={{sonar.web.https.ciphers}}
+      sonar.web.https.maxThreads={{sonar.web.https.maxThreads}}
+      sonar.web.https.minThreads={{sonar.web.https.minThreads}}
+      sonar.web.https.acceptCount={{sonar.web.https.acceptCount}}
+      sonar.web.accessLogs.enabled={{sonar.web.accessLogs.enabled}}
+      sonar.web.accessLogs.pattern={{sonar.web.accessLogs.pattern}}
+      sonar.web.dev={{sonar.web.dev}}
+      sonar.ajp.port={{sonar.ajp.port}}
+  become: yes
+  become_user: root
+
+- name: append elasticsearch properties
+  blockinfile:
+    dest: /opt/sonar/conf/sonar.properties
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: elasticsearch"
+    content: |
+      sonar.search.javaOpts={{sonar.search.javaOpts}}
+      sonar.search.javaAdditionalOpts={{sonar.search.javaAdditionalOpts}}
+      sonar.search.port={{sonar.search.port}}
+      sonar.search.host={{sonar.search.host}}
+      sonar.search.httpPort={{sonar.search.httpPort}}
+  become: yes
+  become_user: root
+
+- name: append updatecenter properties
+  blockinfile:
+    dest: /opt/sonar/conf/sonar.properties
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: updatecenter"
+    content: |
+      sonar.updatecenter.activate={{sonar.updatecenter.activate}}
+  become: yes
+  become_user: root
+
+- name: append log properties
+  blockinfile:
+    dest: /opt/sonar/conf/sonar.properties
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: log"
+    content: |
+      sonar.log.level={{sonar.log.level}}
+      sonar.log.rollingPolicy={{sonar.log.rollingPolicy}}
+      sonar.log.maxFiles={{sonar.log.maxFiles}}
+  become: yes
+  become_user: root
+
+- name: append path properties
+  blockinfile:
+    dest: /opt/sonar/conf/sonar.properties
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: path"
+    content: |
+      sonar.path.logs={{sonar.path.logs}}
+      sonar.path.data={{sonar.path.data}}
+      sonar.path.temp={{sonar.path.temp}}
+  become: yes
+  become_user: root
+
+- name: append notification properties
+  blockinfile:
+    dest: /opt/sonar/conf/sonar.properties
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: notification"
+    content: |
+      sonar.notifications.delay={{sonar.notifications.delay}}
+  become: yes
+  become_user: root
+
+- name: append proxy properties
+  blockinfile:
+    dest: /opt/sonar/conf/sonar.properties
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: proxy"
+    content: |
+      http.proxyHost={{http.proxyHost}}
+      http.proxyPort={{http.proxyPort}}
+      http.proxyUser={{http.proxyUser}}
+      http.proxyPassword={{http.proxyPassword}}
+      http.auth.ntlm.domain={{http.auth.ntlm.domain}}
+      socksProxyHost={{socksProxyHost}}
+      socksProxyPort={{socksProxyPort}}
+  become: yes
+  become_user: root
+
+- name: start sonarqube service
+  service:
+    name: sonar
+    state: started
+    enabled: yes
+  become: yes
+  become_user: root
+

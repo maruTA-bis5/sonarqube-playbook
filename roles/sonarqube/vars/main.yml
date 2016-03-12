@@ -1,0 +1,84 @@
+---
+sonar:
+  jdbc:
+    username: sonar
+    password: sonar
+    url: jdbc:postgresql://127.0.0.1:5432/sonar
+    maxActive: 50
+    maxIdle: 5
+    minIdle: 2
+    maxWait: 5000
+
+  web:
+    javaOpts: -Xmx768m -Xms256m -XX:MaxPermSize=160m -XX:+HeapDumpOnOutOfMemoryError -Djava.net.preferIPv4Stack=true
+    javaAdditionalOpts:
+    host: 0.0.0.0
+    port: 9000
+
+    http:
+      maxThreads: 50
+      minThreads: 5
+      acceptCount: 25
+
+    https:
+      port: -1
+      keyAlias: 
+      keyPass: changeit
+      keystoreFile:
+      keystorePass:
+      keystoreType: JKS
+      keystoreProvider:
+      truststoreFile:
+      truststorePass:
+      truststoreType: JKS
+      truststoreProvider:
+      clientAuth: false
+      ciphers:
+      maxThreads: 50
+      minThreads: 5
+      acceptCount: 25
+
+    accessLogs:
+      enabled: true
+      pattern: combined
+
+    dev: false
+
+  ajp:
+    port: -1
+
+  search:
+    javaOpts: -Xmx1G -Xms256m -Xss256k -Djava.net.preferIPv4Stack=true -XX:+UserParNewGC -XX:+useConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:+HeapDumpOnOutOfMemoryError
+    javaAdditionalOpts:
+    port: 9001
+    host: 127.0.0.1
+    httpPort: -1
+
+  updatecenter:
+    activate: true
+
+  log:
+    level: INFO
+    rollingPolicy: time:yyyy-MM-dd
+    maxFiles: 7
+
+  path:
+    logs: logs
+    data: data
+    temp: temp
+
+  notifications:
+    delay: 60
+
+
+http:
+  proxyHost:
+  proxyPort:
+  proxyUser:
+  proxyPassword:
+  auth:
+    ntlm:
+      domain:
+socksProxyHost:
+socksProxyPort:
+

@@ -1,0 +1,7 @@
+---
+- name: install selinux python bindings
+  yum:
+    name: libselinux-python
+  become: yes
+  become_user: root
+
