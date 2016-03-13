@@ -48,7 +48,7 @@ sonar:
     port: -1
 
   search:
-    javaOpts: -Xmx1G -Xms256m -Xss256k -Djava.net.preferIPv4Stack=true -XX:+UserParNewGC -XX:+useConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:+HeapDumpOnOutOfMemoryError
+    javaOpts: -Xmx1G -Xms256m -Xss256k -Djava.net.preferIPv4Stack=true -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:+HeapDumpOnOutOfMemoryError
     javaAdditionalOpts:
     port: 9001
     host: 127.0.0.1
